@@ -1,5 +1,7 @@
 type CacheKeys = "token_list_hot" | "token_list_cold";
 
+// @TODO cache meta
+// @TODO TTL
 class TokensCache {
   private readonly store: KVNamespace<CacheKeys>;
   private readonly CACHE_KEY_HOT: CacheKeys = "token_list_hot";

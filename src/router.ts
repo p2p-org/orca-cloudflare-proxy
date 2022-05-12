@@ -1,14 +1,12 @@
 import { Router } from "itty-router";
 
-// import { TOKENS_CACHE } from "./schedule";
-
 export const router = Router();
 
-router.get("/tokens", () => {
+router.get("/info", () => {
   return new Response("jfs good");
 });
 
-router.get("/info", () => {
+router.get("/meta", () => {
   return new Response("info");
 });
 
