@@ -9,7 +9,7 @@ crons = ["*/1 * * * *"]
 account_id = "3aafd6cbf17541353b418e17ff0c7316"
 name = "orca-cloudflare-proxy-development"
 vars = { ENVIRONMENT = "development",  ORCA_ENDPOINT = "https://api.orca.so/configs" }
-kv_namespaces = [{ binding = "KV_TOKEN_LIST_DEV", preview_id = "c8ed72e4944448c4a8441195806820cf", id = "c8ed72e4944448c4a8441195806820cf" }]
+kv_namespaces = [{ binding = "KV_TOKEN_LIST_DEV", preview_id = "68d07bde7751407dae6f6b0d0568be9a", id = "68d07bde7751407dae6f6b0d0568be9a" }]
 
 [env.production]
 # account_id = "FILL_ME_PLEASE"

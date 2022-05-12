@@ -2,7 +2,7 @@ type CacheKeys = "token_list_hot" | "token_list_cold";
 
 // @TODO cache meta
 // @TODO TTL
-class TokensCache {
+class OrcaInfoCache {
   private readonly store: KVNamespace<CacheKeys>;
   private readonly CACHE_KEY_HOT: CacheKeys = "token_list_hot";
 
@@ -11,7 +11,7 @@ class TokensCache {
       ENVIRONMENT === "development" ? KV_TOKENS_LIST_DEV : KV_TOKENS_LIST_PROD;
   }
 
-  async getTokensCache() {
+  async getInfo(): Promise<OrcaResponse | null> {
     const tokenList = await this.store.get(this.CACHE_KEY_HOT);
 
     return tokenList ? JSON.parse(tokenList) : null;
@@ -19,9 +19,9 @@ class TokensCache {
 
   // @FIXME
   // eslint-disable-next-line
-  async setTokensCache(tokenList: Array<any>) {
+  async setInfo(tokenList: OrcaResponse) {
     await this.store.put(this.CACHE_KEY_HOT, JSON.stringify(tokenList));
   }
 }
 
-export default new TokensCache();
+export default new OrcaInfoCache();

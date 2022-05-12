@@ -1,9 +1,13 @@
 import { Router } from "itty-router";
 
-export const router = Router();
+// import OrcaInfoCache from "./kv";
+
+const router = Router();
 
 router.get("/info", () => {
-  return new Response("jfs good");
+  const orcaInfo = KV_TOKENS_LIST_DEV.get("t");
+
+  return new Response(JSON.stringify(orcaInfo));
 });
 
 router.get("/meta", () => {
@@ -11,3 +15,5 @@ router.get("/meta", () => {
 });
 
 router.all("*", () => new Response("Not Found.", { status: 404 }));
+
+export { router };
