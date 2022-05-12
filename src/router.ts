@@ -8,4 +8,8 @@ router.get("/tokens", () => {
   return new Response("jfs good");
 });
 
+router.get("/info", () => {
+  return new Response("info");
+});
+
 router.all("*", () => new Response("Not Found.", { status: 404 }));

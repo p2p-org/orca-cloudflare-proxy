@@ -6,10 +6,13 @@ compatibility_date = "2022-05-11"
 crons = ["*/1 * * * *"]
 
 [env.development]
+account_id = "3aafd6cbf17541353b418e17ff0c7316"
 name = "orca-cloudflare-proxy-development"
-vars = { ENVIRONMENT = "development",  ORCA_ENDPOINT = 'https://api.orca.so/configs' }
+vars = { ENVIRONMENT = "development",  ORCA_ENDPOINT = "https://api.orca.so/configs" }
+kv_namespaces = [{ binding = "KV_TOKEN_LIST_DEV", preview_id = "c8ed72e4944448c4a8441195806820cf", id = "c8ed72e4944448c4a8441195806820cf" }]
 
-# decide with --env flag
 [env.production]
+# account_id = "FILL_ME_PLEASE"
 name = "orca-cloudflare-proxy-production"
-vars = { ENVIRONMENT = "production",  ORCA_ENDPOINT = 'https://api.orca.so/configs' }
+vars = { ENVIRONMENT = "production",  ORCA_ENDPOINT = "https://api.orca.so/configs" }
+# kv_namespaces = ['FILL_ME_PLEASE']
