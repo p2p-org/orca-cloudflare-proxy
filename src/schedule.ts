@@ -1,3 +1,7 @@
+// @TODO hot cache
+// @TODO cold fall-back
+// metadata
+// TTL
 const BACKEND_ENDPOINT = "https://api.github.com/users/defunkt";
 const MOCK_CONFIG = {
   headers: {

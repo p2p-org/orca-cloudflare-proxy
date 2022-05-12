@@ -5,8 +5,6 @@ import { Router } from "itty-router";
 export const router = Router();
 
 router.get("/tokens", () => {
-  // const tokensCache = await caches.open(TOKENS_CACHE);
-
   return new Response("jfs good");
 });
 

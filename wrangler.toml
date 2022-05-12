@@ -4,3 +4,12 @@ compatibility_date = "2022-05-11"
 
 [triggers]
 crons = ["*/1 * * * *"]
+
+[env.development]
+name = "orca-cloudflare-proxy-development"
+vars = { ENVIRONMENT = "development",  ORCA_ENDPOINT = 'https://api.orca.so/configs' }
+
+# decide with --env flag
+[env.production]
+name = "orca-cloudflare-proxy-production"
+vars = { ENVIRONMENT = "production",  ORCA_ENDPOINT = 'https://api.orca.so/configs' }

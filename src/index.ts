@@ -1,5 +1,5 @@
 import { router } from "./router";
-import { updateOrcaPools } from "./schedule";
+// import { updateOrcaPools } from "./schedule";
 
 // @FIXME add mandatory linters checks
 // @TODO check build TSC to throw errors
@@ -10,6 +10,6 @@ addEventListener("fetch", (event) =>
   event.respondWith(router.handle(event.request))
 );
 
-addEventListener("scheduled", (event) => {
-  event.waitUntil(updateOrcaPools());
-});
+// addEventListener("scheduled", (event) => {
+//   event.waitUntil(updateOrcaPools());
+// });
