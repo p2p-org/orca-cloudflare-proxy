@@ -1,7 +1,7 @@
 declare const ORCA_ENDPOINT: string;
 declare const ENVIRONMENT: "development" | "production";
-declare const KV_TOKENS_LIST_DEV: KVNamespace;
-declare const KV_TOKENS_LIST_PROD: KVNamespace;
+declare const KV_TOKEN_LIST_DEV: KVNamespace;
+declare const KV_TOKEN_LIST_PROD: KVNamespace;
 declare type Token = {
   mint: string;
   name: string;

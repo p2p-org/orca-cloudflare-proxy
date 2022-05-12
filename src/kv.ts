@@ -8,7 +8,7 @@ class OrcaInfoCache {
 
   constructor() {
     this.store =
-      ENVIRONMENT === "development" ? KV_TOKENS_LIST_DEV : KV_TOKENS_LIST_PROD;
+      ENVIRONMENT === "development" ? KV_TOKEN_LIST_DEV : KV_TOKEN_LIST_PROD;
   }
 
   async getInfo(): Promise<OrcaResponse | null> {

@@ -1,11 +1,11 @@
 import { Router } from "itty-router";
 
-// import OrcaInfoCache from "./kv";
+import OrcaInfoCache from "./kv";
 
 const router = Router();
 
 router.get("/info", () => {
-  const orcaInfo = KV_TOKENS_LIST_DEV.get("t");
+  const orcaInfo = OrcaInfoCache.getInfo();
 
   return new Response(JSON.stringify(orcaInfo));
 });
