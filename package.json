@@ -1,0 +1,36 @@
+{
+  "name": "orca-cloudflare-proxy",
+  "version": "1.0.0",
+  "description": "A cloudflare worker for caching data from orca",
+  "main": "src/index.ts",
+  "repository": "https://github.com/p2p-org/orca-cloudflare-proxy",
+  "author": "Kirill Shakirov",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "lint:es": "eslint ./src --ext js,ts,tsx --cache --quiet",
+    "lint:type": "tsc  --noEmit --project ./tsconfig.json --emitDeclarationOnly false",
+    "lint:prettier": "pretty-quick --staged",
+    "lint:commit": "yarn commitlint --edit",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "itty-router": "^2.6.1",
+    "pretty-quick": "^3.1.3",
+    "typescript": "^4.6.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^3.10.0",
+    "@commitlint/config-conventional": "^16.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "commitlint": "^16.2.4",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "husky": "^8.0.1",
+    "prettier": "^2.6.2"
+  }
+}

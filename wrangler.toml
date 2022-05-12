@@ -1,0 +1,6 @@
+name = "orca"
+main = "src/index.ts"
+compatibility_date = "2022-05-11"
+
+[triggers]
+crons = ["*/1 * * * *"]
