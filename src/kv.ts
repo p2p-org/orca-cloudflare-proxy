@@ -11,14 +11,31 @@ class OrcaInfoCache {
   private readonly CACHE_READ_OPTIONS: KVNamespaceGetOptions<"json"> = {
     type: "json",
   };
-  // private readonly EXPIRATION_HOT: number = 86400; // one day
-  // private readonly EXPIRATION_COLD: number = this.EXPIRATION_HOT * 7; // one week
-  private readonly EXPIRATION_HOT: number = 60;
-  private readonly EXPIRATION_COLD: number = 180;
+  private readonly EXPIRATION_HOT_PROD: number = 86400; // one day
+  private readonly EXPIRATION_COLD_PROD: number = this.EXPIRATION_HOT_PROD * 7; // one week
+  private readonly EXPIRATION_HOT_DEV: number = 60;
+  private readonly EXPIRATION_COLD_DEV: number = 180;
+  private readonly DEVELOPMENT: boolean;
 
   constructor() {
-    this.store =
-      ENVIRONMENT === "development" ? KV_TOKEN_LIST_DEV : KV_TOKEN_LIST_PROD;
+    this.DEVELOPMENT = ENVIRONMENT === "development";
+    this.store = this.DEVELOPMENT ? KV_TOKEN_LIST_DEV : KV_TOKEN_LIST_PROD;
+  }
+
+  private get expirationHot() {
+    return this.DEVELOPMENT
+      ? this.EXPIRATION_HOT_DEV
+      : this.EXPIRATION_HOT_PROD;
+  }
+
+  private get expirationCold() {
+    return this.DEVELOPMENT
+      ? this.EXPIRATION_COLD_DEV
+      : this.EXPIRATION_COLD_PROD;
+  }
+
+  private expirationTtl(type: CacheType) {
+    return type === "hot" ? this.expirationHot : this.expirationCold;
   }
 
   async getInfo(): Promise<KVNamespaceGetWithMetadataResult<
@@ -51,8 +68,7 @@ class OrcaInfoCache {
       updatedAt: new Date().toUTCString(),
       type,
     };
-    const expirationTtl =
-      type === "hot" ? this.EXPIRATION_HOT : this.EXPIRATION_COLD;
+    const expirationTtl = this.expirationTtl(type);
 
     return {
       metadata,
