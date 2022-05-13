@@ -35,11 +35,17 @@ declare type TokenList = KeyValuePairs<Token>;
 
 declare type PoolList = KeyValuePairs<Pool>;
 
-declare type OrcaResponse = {
+declare type OrcaApiResponse = {
   programIds: KeyValuePairs;
   tokens: TokenList;
   pools: PoolList;
 };
+
+declare type CacheMeta = {
+  lastUpdated: string;
+};
+
+declare type OrcaInfo = OrcaApiResponse & CacheMeta;
 
 type KeyValuePairs<T = string> = {
   [K: string]: T;

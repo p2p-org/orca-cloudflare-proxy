@@ -112,6 +112,7 @@ module.exports = {
         ignoreEnums: true,
         ignoreNumericLiteralTypes: true,
         ignoreArrayIndexes: true,
+        ignoreReadonlyClassProperties: true,
       },
     ],
 
