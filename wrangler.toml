@@ -3,8 +3,9 @@ main = "src/index.ts"
 compatibility_date = "2022-05-11"
 
 [triggers]
-crons = ["*/3 * * * *"]
+crons = ["*/1 * * * *"]
 # crons = ["0 13 * * *"]
+
 
 [env.development]
 account_id = "3aafd6cbf17541353b418e17ff0c7316"
@@ -16,5 +17,5 @@ kv_namespaces = [{ binding = "KV_TOKEN_LIST_DEV", preview_id = "68d07bde7751407d
 account_id = "3aafd6cbf17541353b418e17ff0c7316"
 name = "orca-cloudflare-proxy-production"
 vars = { ENVIRONMENT = "production",  ORCA_ENDPOINT = "https://api.orca.so/configs" }
-kv_namespaces = [{ binding = "KV_TOKEN_LIST_PROD", id = "b8430a50582345dc85bd77200f25b75c" }]
+kv_namespaces = [{ binding = "KV_TOKEN_LIST_PROD", id = "32901af3efb746859096ae51eb848d7f" }]
 

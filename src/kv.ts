@@ -96,6 +96,10 @@ class OrcaInfoCache {
     OrcaInfo,
     CacheMeta
   > | null> {
+    throw new Error(`
+      ${this.CACHE_KEY_HOT} \n
+      ${this.store.get}\n
+    `);
     const hotCacheInfo = await this.hotCacheInfo();
 
     if (hotCacheInfo.value) {
