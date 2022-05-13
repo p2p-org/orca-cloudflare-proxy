@@ -2,7 +2,6 @@ import { getOrcaInfo } from "./api";
 
 type CacheKeys = "orca_info_hot" | "orca_info_cold" | "orca_meta";
 
-// @TODO cache meta
 class OrcaInfoCache {
   private readonly store: KVNamespace<CacheKeys>;
   private readonly CACHE_KEY_HOT: CacheKeys = "orca_info_hot";
@@ -38,32 +37,7 @@ class OrcaInfoCache {
     return type === "hot" ? this.expirationHot : this.expirationCold;
   }
 
-  async getInfo(): Promise<KVNamespaceGetWithMetadataResult<
-    OrcaInfo,
-    CacheMeta
-  > | null> {
-    const hotCacheInfo = await this.store.getWithMetadata<OrcaInfo, CacheMeta>(
-      this.CACHE_KEY_HOT,
-      this.CACHE_READ_OPTIONS
-    );
-
-    if (hotCacheInfo.value) {
-      return hotCacheInfo;
-    }
-
-    const coldCacheInfo = await this.store.getWithMetadata<OrcaInfo, CacheMeta>(
-      this.CACHE_KEY_COLD,
-      this.CACHE_READ_OPTIONS
-    );
-
-    if (coldCacheInfo.value) {
-      return coldCacheInfo;
-    }
-
-    return null;
-  }
-
-  private getCacheMeta(type: CacheType): KVNamespacePutOptions {
+  private buildCacheMeta(type: CacheType): KVNamespacePutOptions {
     const metadata: CacheMeta = {
       updatedAt: new Date().toUTCString(),
       type,
@@ -80,7 +54,7 @@ class OrcaInfoCache {
     this.store.put(
       this.CACHE_KEY_HOT,
       JSON.stringify(resp),
-      this.getCacheMeta("hot")
+      this.buildCacheMeta("hot")
     );
   }
 
@@ -88,7 +62,21 @@ class OrcaInfoCache {
     this.store.put(
       this.CACHE_KEY_COLD,
       JSON.stringify(resp),
-      this.getCacheMeta("cold")
+      this.buildCacheMeta("cold")
+    );
+  }
+
+  private async hotCacheInfo() {
+    return await this.store.getWithMetadata<OrcaInfo, CacheMeta>(
+      this.CACHE_KEY_HOT,
+      this.CACHE_READ_OPTIONS
+    );
+  }
+
+  private async coldCacheInfo() {
+    return await this.store.getWithMetadata<OrcaInfo, CacheMeta>(
+      this.CACHE_KEY_COLD,
+      this.CACHE_READ_OPTIONS
     );
   }
 
@@ -103,6 +91,41 @@ class OrcaInfoCache {
     if (resp && shouldUpdateCold) {
       this.updateColdCache(resp);
     }
+  }
+
+  async getInfo(): Promise<KVNamespaceGetWithMetadataResult<
+    OrcaInfo,
+    CacheMeta
+  > | null> {
+    const hotCacheInfo = await this.hotCacheInfo();
+
+    if (hotCacheInfo.value) {
+      return hotCacheInfo;
+    }
+
+    const coldCacheInfo = await this.coldCacheInfo();
+
+    if (coldCacheInfo.value) {
+      return coldCacheInfo;
+    }
+
+    return null;
+  }
+
+  async getCacheMeta(): Promise<CacheMeta | null> {
+    const hotCacheInfo = await this.hotCacheInfo();
+
+    if (hotCacheInfo.metadata) {
+      return hotCacheInfo.metadata;
+    }
+
+    const coldCacheInfo = await this.coldCacheInfo();
+
+    if (coldCacheInfo.metadata) {
+      return coldCacheInfo.metadata;
+    }
+
+    return null;
   }
 }
 

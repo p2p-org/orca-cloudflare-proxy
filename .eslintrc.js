@@ -51,6 +51,11 @@ module.exports = {
         prev: "*",
         next: ["if", "switch", "while", "function", "block-like"],
       },
+      {
+        blankLine: "always",
+        prev: ["if", "switch", "while", "function", "block-like"],
+        next: "*",
+      },
     ],
     "@typescript-eslint/space-before-blocks": ["error"],
     "@typescript-eslint/consistent-type-imports": "error",

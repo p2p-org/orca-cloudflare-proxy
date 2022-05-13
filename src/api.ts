@@ -9,8 +9,6 @@ export const getOrcaInfo = async (): Promise<OrcaApiResponse | null> => {
       tokens: info.tokens,
     };
   } catch (err) {
-    // console.log("Error fetching orca", err);
-
     return null;
   }
 };

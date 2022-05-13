@@ -11,9 +11,10 @@ router.get("/info", async () => {
   return new Response(JSON.stringify(orcaInfo, null, 2));
 });
 
-router.get("/meta", () => {
-  // @TODO to implement
-  return new Response("info");
+router.get("/meta", async () => {
+  const cacheMeta = await OrcaInfoCache.getCacheMeta();
+
+  return new Response(JSON.stringify(cacheMeta));
 });
 
 router.all("*", () => new Response("Not Found.", { status: 404 }));
