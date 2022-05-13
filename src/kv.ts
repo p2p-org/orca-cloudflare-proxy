@@ -49,16 +49,16 @@ class OrcaInfoCache {
     };
   }
 
-  private updateHotCache(resp: OrcaApiResponse): void {
-    this.store.put(
+  private async updateHotCache(resp: OrcaApiResponse): Promise<void> {
+    await this.store.put(
       this.CACHE_KEY_HOT,
       JSON.stringify(resp),
       this.buildCacheMeta("hot")
     );
   }
 
-  private updateColdCache(resp: OrcaApiResponse): void {
-    this.store.put(
+  private async updateColdCache(resp: OrcaApiResponse): Promise<void> {
+    await this.store.put(
       this.CACHE_KEY_COLD,
       JSON.stringify(resp),
       this.buildCacheMeta("cold")
@@ -84,11 +84,11 @@ class OrcaInfoCache {
     const shouldUpdateCold = !(await this.store.get(this.CACHE_KEY_COLD));
 
     if (resp) {
-      this.updateHotCache(resp);
+      await this.updateHotCache(resp);
     }
 
     if (resp && shouldUpdateCold) {
-      this.updateColdCache(resp);
+      await this.updateColdCache(resp);
     }
   }
 
@@ -96,10 +96,6 @@ class OrcaInfoCache {
     OrcaInfo,
     CacheMeta
   > | null> {
-    throw new Error(`
-      ${this.CACHE_KEY_HOT} \n
-      ${this.store.get}\n
-    `);
     const hotCacheInfo = await this.hotCacheInfo();
 
     if (hotCacheInfo.value) {
