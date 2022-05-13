@@ -1,12 +1,11 @@
 import { getOrcaInfo } from "./api";
 
-type CacheKeys = "orca_info_hot" | "orca_info_cold" | "orca_meta";
+type CacheKeys = "orca_info_hot" | "orca_info_cold";
 
 class OrcaInfoCache {
   private readonly store: KVNamespace<CacheKeys>;
   private readonly CACHE_KEY_HOT: CacheKeys = "orca_info_hot";
   private readonly CACHE_KEY_COLD: CacheKeys = "orca_info_cold";
-  private readonly CACHE_KEY_META: CacheKeys = "orca_meta";
   private readonly CACHE_READ_OPTIONS: KVNamespaceGetOptions<"json"> = {
     type: "json",
   };
