@@ -11,6 +11,5 @@ addEventListener("fetch", (event) =>
 );
 
 addEventListener("scheduled", (event) => {
-  // console.log("SCH");
   event.waitUntil(OrcaInfoCache.makeScheduledUpdate());
 });

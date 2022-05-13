@@ -3,9 +3,6 @@ import { getOrcaInfo } from "./api";
 type CacheKeys = "orca_info_hot" | "orca_info_cold" | "orca_meta";
 
 // @TODO cache meta
-// @TODO TTL
-// @TODO hot cache
-// @TODO cold fall-back
 class OrcaInfoCache {
   private readonly store: KVNamespace<CacheKeys>;
   private readonly CACHE_KEY_HOT: CacheKeys = "orca_info_hot";
@@ -17,7 +14,7 @@ class OrcaInfoCache {
   // private readonly EXPIRATION_HOT: number = 86400; // one day
   // private readonly EXPIRATION_COLD: number = this.EXPIRATION_HOT * 7; // one week
   private readonly EXPIRATION_HOT: number = 60;
-  private readonly EXPIRATION_COLD: number = 120;
+  private readonly EXPIRATION_COLD: number = 180;
 
   constructor() {
     this.store =
@@ -28,16 +25,25 @@ class OrcaInfoCache {
     OrcaInfo,
     CacheMeta
   > | null> {
-    const cacheInfo = await this.store.getWithMetadata<OrcaInfo, CacheMeta>(
+    const hotCacheInfo = await this.store.getWithMetadata<OrcaInfo, CacheMeta>(
       this.CACHE_KEY_HOT,
       this.CACHE_READ_OPTIONS
     );
 
-    if (!cacheInfo?.value) {
-      return null;
+    if (hotCacheInfo.value) {
+      return hotCacheInfo;
     }
 
-    return cacheInfo;
+    const coldCacheInfo = await this.store.getWithMetadata<OrcaInfo, CacheMeta>(
+      this.CACHE_KEY_COLD,
+      this.CACHE_READ_OPTIONS
+    );
+
+    if (coldCacheInfo.value) {
+      return coldCacheInfo;
+    }
+
+    return null;
   }
 
   private getCacheMeta(type: CacheType): KVNamespacePutOptions {
@@ -55,7 +61,6 @@ class OrcaInfoCache {
   }
 
   private updateHotCache(resp: OrcaApiResponse): void {
-    // console.log("update hot cache");
     this.store.put(
       this.CACHE_KEY_HOT,
       JSON.stringify(resp),
@@ -63,13 +68,24 @@ class OrcaInfoCache {
     );
   }
 
+  private updateColdCache(resp: OrcaApiResponse): void {
+    this.store.put(
+      this.CACHE_KEY_COLD,
+      JSON.stringify(resp),
+      this.getCacheMeta("cold")
+    );
+  }
+
   async makeScheduledUpdate(): Promise<void> {
     const resp = await getOrcaInfo();
-
-    // console.log("get new resp from orca", resp);
+    const shouldUpdateCold = !(await this.store.get(this.CACHE_KEY_COLD));
 
     if (resp) {
       this.updateHotCache(resp);
+    }
+
+    if (resp && shouldUpdateCold) {
+      this.updateColdCache(resp);
     }
   }
 }
