@@ -11,8 +11,13 @@ class OrcaInfoCache {
   private readonly CACHE_KEY_HOT: CacheKeys = "orca_info_hot";
   private readonly CACHE_KEY_COLD: CacheKeys = "orca_info_cold";
   private readonly CACHE_KEY_META: CacheKeys = "orca_meta";
-  // private readonly EXPIRATION_HOT: number = 86400;
+  private readonly CACHE_READ_OPTIONS: KVNamespaceGetOptions<"json"> = {
+    type: "json",
+  };
+  // private readonly EXPIRATION_HOT: number = 86400; // one day
+  // private readonly EXPIRATION_COLD: number = this.EXPIRATION_HOT * 7; // one week
   private readonly EXPIRATION_HOT: number = 60;
+  private readonly EXPIRATION_COLD: number = 120;
 
   constructor() {
     this.store =
@@ -23,24 +28,29 @@ class OrcaInfoCache {
     OrcaInfo,
     CacheMeta
   > | null> {
-    const cacheInfo = await this.store.getWithMetadata<CacheMeta>(
-      this.CACHE_KEY_HOT
+    const cacheInfo = await this.store.getWithMetadata<OrcaInfo, CacheMeta>(
+      this.CACHE_KEY_HOT,
+      this.CACHE_READ_OPTIONS
     );
 
     if (!cacheInfo?.value) {
       return null;
     }
 
-    return {
-      value: JSON.parse(cacheInfo.value),
-      metadata: cacheInfo.metadata,
-    };
+    return cacheInfo;
   }
 
-  private getCacheMeta(): KVNamespacePutOptions {
+  private getCacheMeta(type: CacheType): KVNamespacePutOptions {
+    const metadata: CacheMeta = {
+      updatedAt: new Date().toUTCString(),
+      type,
+    };
+    const expirationTtl =
+      type === "hot" ? this.EXPIRATION_HOT : this.EXPIRATION_COLD;
+
     return {
-      metadata: { updatedAt: Date.now() },
-      expirationTtl: this.EXPIRATION_HOT,
+      metadata,
+      expirationTtl,
     };
   }
 
@@ -49,7 +59,7 @@ class OrcaInfoCache {
     this.store.put(
       this.CACHE_KEY_HOT,
       JSON.stringify(resp),
-      this.getCacheMeta()
+      this.getCacheMeta("hot")
     );
   }
 

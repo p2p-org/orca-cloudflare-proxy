@@ -41,9 +41,11 @@ declare type OrcaApiResponse = {
   pools: PoolList;
 };
 
+declare type CacheType = "cold" | "hot";
+
 declare type CacheMeta = {
-  lastUpdated: string;
-  type: "cold" | "hot";
+  updatedAt: string;
+  type: CacheType;
 };
 
 declare type OrcaInfo = OrcaApiResponse & CacheMeta;
