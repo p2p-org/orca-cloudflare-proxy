@@ -19,12 +19,22 @@ class OrcaInfoCache {
       ENVIRONMENT === "development" ? KV_TOKEN_LIST_DEV : KV_TOKEN_LIST_PROD;
   }
 
-  async getInfo(): Promise<OrcaInfo | null> {
-    const cacheInfo = await this.store.get(this.CACHE_KEY_HOT);
+  async getInfo(): Promise<KVNamespaceGetWithMetadataResult<
+    OrcaInfo,
+    CacheMeta
+  > | null> {
+    const cacheInfo = await this.store.getWithMetadata<CacheMeta>(
+      this.CACHE_KEY_HOT
+    );
 
-    // console.log("get info  from KV", cacheInfo);
+    if (!cacheInfo?.value) {
+      return null;
+    }
 
-    return cacheInfo ? JSON.parse(cacheInfo) : null;
+    return {
+      value: JSON.parse(cacheInfo.value),
+      metadata: cacheInfo.metadata,
+    };
   }
 
   private getCacheMeta(): KVNamespacePutOptions {

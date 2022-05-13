@@ -43,6 +43,7 @@ declare type OrcaApiResponse = {
 
 declare type CacheMeta = {
   lastUpdated: string;
+  type: "cold" | "hot";
 };
 
 declare type OrcaInfo = OrcaApiResponse & CacheMeta;
