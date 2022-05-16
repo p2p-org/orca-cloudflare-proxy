@@ -81,13 +81,9 @@ class OrcaInfoCache {
 
   async makeScheduledUpdate(): Promise<void> {
     const resp = await getOrcaInfo();
-    const shouldUpdateCold = !(await this.store.get(this.CACHE_KEY_COLD));
 
     if (resp) {
       await this.updateHotCache(resp);
-    }
-
-    if (resp && shouldUpdateCold) {
       await this.updateColdCache(resp);
     }
   }
