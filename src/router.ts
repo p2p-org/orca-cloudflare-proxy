@@ -1,13 +1,22 @@
 import { Router } from "itty-router";
 
-// import { TOKENS_CACHE } from "./schedule";
+import OrcaInfoCache from "./kv";
 
-export const router = Router();
+const router = Router();
 
-router.get("/tokens", () => {
-  // const tokensCache = await caches.open(TOKENS_CACHE);
+router.get("/info", async () => {
+  const orcaInfo = await OrcaInfoCache.getInfo();
 
-  return new Response("jfs good");
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  return new Response(JSON.stringify(orcaInfo, null, 2));
+});
+
+router.get("/meta", async () => {
+  const cacheMeta = await OrcaInfoCache.getCacheMeta();
+
+  return new Response(JSON.stringify(cacheMeta));
 });
 
 router.all("*", () => new Response("Not Found.", { status: 404 }));
+
+export { router };

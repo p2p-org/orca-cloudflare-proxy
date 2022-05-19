@@ -27,6 +27,37 @@ module.exports = {
     "no-magic-numbers": "off",
     "require-await": "off",
     "simple-import-sort/exports": "warn",
+    "space-before-blocks": "off",
+    "padding-line-between-statements": "off",
+    "@typescript-eslint/padding-line-between-statements": [
+      "error",
+      {
+        blankLine: "always",
+        prev: "*",
+        next: "return",
+      },
+      {
+        blankLine: "always",
+        prev: "*",
+        next: ["interface", "type"],
+      },
+      {
+        blankLine: "always",
+        prev: ["interface", "type"],
+        next: "*",
+      },
+      {
+        blankLine: "always",
+        prev: "*",
+        next: ["if", "switch", "while", "function", "block-like"],
+      },
+      {
+        blankLine: "always",
+        prev: ["if", "switch", "while", "function", "block-like"],
+        next: "*",
+      },
+    ],
+    "@typescript-eslint/space-before-blocks": ["error"],
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/require-await": "error",
     "@typescript-eslint/explicit-member-accessibility": [
@@ -46,10 +77,22 @@ module.exports = {
     "@typescript-eslint/naming-convention": [
       "error",
       {
-        selector: "memberLike",
-        modifiers: ["private"],
+        selector: "variable",
+        format: ["camelCase", "UPPER_CASE"],
+      },
+      {
+        selector: "property",
+        modifiers: ["private", "public", "protected", "static", "readonly"],
+        format: ["UPPER_CASE", "camelCase"],
+        leadingUnderscore: "allow",
+      },
+      {
+        selector: "typeLike",
+        format: ["PascalCase"],
+      },
+      {
+        selector: "method",
         format: ["camelCase"],
-        leadingUnderscore: "require",
       },
     ],
 
@@ -70,10 +113,11 @@ module.exports = {
     "@typescript-eslint/no-magic-numbers": [
       "error",
       {
-        ignore: [-1, 0, 1],
+        ignore: [-1, 0, 1, 7],
         ignoreEnums: true,
         ignoreNumericLiteralTypes: true,
         ignoreArrayIndexes: true,
+        ignoreReadonlyClassProperties: true,
       },
     ],
 
