@@ -1,5 +1,4 @@
-# @TODO finilize https://developers.cloudflare.com/workers/platform/deploy-button/
-name: Build
+name: Deploy to Cloudflare Workers
 on:
   push:
   pull_request:
@@ -7,9 +6,26 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: production
     timeout-minutes: 15
-    needs: test
+    name: Build & Deploy
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - name: Install dependecies
+        run: yarn install
+
       - name: Publish
-        uses: cloudflare/wrangler-action@1.3.0
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+#          environment: production
+          secrets: |
+            ENVIRONMENT
+            ORCA_ENDPOINT
+          preCommands: |
+            wrangler kv:namespace create KV_TOKEN_LIST_PROD
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ENVIRONMENT: "production"
+          ORCA_ENDPOINT: "https://api.orca.so/configs"
