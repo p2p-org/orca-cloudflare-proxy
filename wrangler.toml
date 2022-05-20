@@ -1,7 +1,6 @@
 name = "orca"
 main = "src/index.ts"
 compatibility_date = "2022-05-11"
-kv_namespaces = [{ binding = "KV_TOKEN_LIST_PROD", id = "3073bf66eac64652bfd2dbcb58b009ba" }]
 
 [triggers]
 # crons = ["*/1 * * * *"]
