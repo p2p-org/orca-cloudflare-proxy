@@ -1,0 +1,39 @@
+name: Test
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+
+jobs:
+  lint_es:
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 10
+    name: lint es
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: install dependecies
+        run: yarn install
+
+      - name: lint ES
+        run: yarn lint:es
+
+  lint_type:
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 10
+    name: lint type
+    needs: lint_es
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: install dependecies
+        run: yarn install
+
+      - name: type-checking TS
+        run: yarn lint:type
