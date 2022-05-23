@@ -15,11 +15,17 @@ jobs:
       - name: Install dependecies
         run: yarn install
 
+      - name: Increment patch
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          yarn increment:patch
+
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: publish --env production
+          command: publish --env $ENVIRONMENT
           secrets: |
             ENVIRONMENT
             ORCA_ENDPOINT
