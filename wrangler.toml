@@ -3,19 +3,18 @@ main = "src/index.ts"
 compatibility_date = "2022-05-11"
 
 [triggers]
-crons = ["*/1 * * * *"]
-# crons = ["0 13 * * *"]
+crons = ["0 13 * * *"]
 
 [env.development]
-account_id = "3aafd6cbf17541353b418e17ff0c7316"
+account_id = "YOUR_DEV_ACCOUNT_ID"
 name = "orca-cloudflare-proxy-development"
 vars = { ENVIRONMENT = "development",  ORCA_ENDPOINT = "https://api.orca.so/configs" }
-kv_namespaces = [{ binding = "KV_TOKEN_LIST_DEV", preview_id = "68d07bde7751407dae6f6b0d0568be9a", id = "68d07bde7751407dae6f6b0d0568be9a" }]
+kv_namespaces = [{ binding = "YOUR_DEV_BINDING_NAME", preview_id = "SAME_AS_ID", id = "YOUR_BINDING_ID" }]
 
 [env.production]
-account_id = "e8861c88f3aeb07236ccc26b6c21c560"
+account_id = "YOUR_PROD_ACCOUNT_ID"
 name = "orca-cloudflare"
 vars = { ENVIRONMENT = "production",  ORCA_ENDPOINT = "https://api.orca.so/configs" }
-kv_namespaces = [{ binding = "KV_TOKEN_LIST_PROD", id = "3073bf66eac64652bfd2dbcb58b009ba" }]
-#route = "orca.wallet.p2p.org/*"
+kv_namespaces = [{ binding = "YOUR_PROD_BINDING_NAME", id = "PROD_ID" }]
+
 
