@@ -5,7 +5,6 @@ on:
       - master
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     environment: production
     timeout-minutes: 15
