@@ -1,3 +1,4 @@
+import { version } from "../package.json";
 import { getOrcaInfo } from "./api";
 
 type CacheKeys = "orca_info_hot" | "orca_info_cold";
@@ -32,6 +33,7 @@ class OrcaInfoCache {
     const metadata: CacheMeta = {
       updatedAt: new Date().toUTCString(),
       type,
+      version,
     };
     const expirationTtl = this.expirationTtl(type);
 

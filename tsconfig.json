@@ -8,6 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
-    "noPropertyAccessFromIndexSignature": false
+    "noPropertyAccessFromIndexSignature": false,
+    "resolveJsonModule": true
   }
 }

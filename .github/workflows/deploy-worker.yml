@@ -19,12 +19,9 @@ jobs:
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-#          environment: production
           secrets: |
             ENVIRONMENT
             ORCA_ENDPOINT
-          preCommands: |
-            wrangler kv:namespace create KV_TOKEN_LIST_PROD
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           ENVIRONMENT: "production"

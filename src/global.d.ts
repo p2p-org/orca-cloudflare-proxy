@@ -46,6 +46,7 @@ declare type CacheType = "cold" | "hot";
 declare type CacheMeta = {
   updatedAt: string;
   type: CacheType;
+  version: string;
 };
 
 declare type OrcaInfo = OrcaApiResponse & CacheMeta;
