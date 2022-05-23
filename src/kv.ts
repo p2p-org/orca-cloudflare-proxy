@@ -10,9 +10,7 @@ class OrcaInfoCache {
     type: "json",
   };
   private readonly EXPIRATION_HOT_PROD: number = 86400; // one day
-  private readonly EXPIRATION_COLD_PROD: number = this.EXPIRATION_HOT_PROD * 7; // one week
   private readonly EXPIRATION_HOT_DEV: number = 60;
-  private readonly EXPIRATION_COLD_DEV: number = 180;
   private readonly DEVELOPMENT: boolean;
 
   constructor() {
@@ -26,14 +24,8 @@ class OrcaInfoCache {
       : this.EXPIRATION_HOT_PROD;
   }
 
-  private get expirationCold() {
-    return this.DEVELOPMENT
-      ? this.EXPIRATION_COLD_DEV
-      : this.EXPIRATION_COLD_PROD;
-  }
-
-  private expirationTtl(type: CacheType) {
-    return type === "hot" ? this.expirationHot : this.expirationCold;
+  private expirationTtl(type: CacheType): number | null {
+    return type === "hot" ? this.expirationHot : null;
   }
 
   private buildCacheMeta(type: CacheType): KVNamespacePutOptions {
@@ -43,10 +35,7 @@ class OrcaInfoCache {
     };
     const expirationTtl = this.expirationTtl(type);
 
-    return {
-      metadata,
-      expirationTtl,
-    };
+    return expirationTtl ? { metadata, expirationTtl } : { metadata };
   }
 
   private async updateHotCache(resp: OrcaApiResponse): Promise<void> {

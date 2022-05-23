@@ -3,8 +3,8 @@ main = "src/index.ts"
 compatibility_date = "2022-05-11"
 
 [triggers]
-# crons = ["*/1 * * * *"]
-crons = ["0 13 * * *"]
+crons = ["*/1 * * * *"]
+# crons = ["0 13 * * *"]
 
 [env.development]
 account_id = "3aafd6cbf17541353b418e17ff0c7316"
