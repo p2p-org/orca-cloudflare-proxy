@@ -1,10 +1,13 @@
 name: Deploy to Cloudflare Workers
 on:
-  push:
   pull_request:
-  repository_dispatch:
+    types:
+      - closed
+    branches:
+      - master
 jobs:
   deploy:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     environment: production
     timeout-minutes: 15

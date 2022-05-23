@@ -1,8 +1,12 @@
-name: Test worker
+name: Test
 
 on:
   pull_request:
-    types: [opened, edited, reopened, closed]
+    types:
+      - opened
+      - edited
+      - reopened
+      - closed
 
 jobs:
   lint_es:
