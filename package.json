@@ -1,6 +1,6 @@
 {
   "name": "orca-cloudflare-proxy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A cloudflare worker for caching data from orca",
   "main": "src/index.ts",
   "repository": "https://github.com/p2p-org/orca-cloudflare-proxy",
@@ -9,8 +9,8 @@
   "private": false,
   "scripts": {
     "dev": "npx wrangler dev",
-    "publish": "yarn increment npx wrangler publish --env production",
-    "increment": "yarn version --patch",
+    "publish": "yarn increment:patch npx wrangler publish --env production",
+    "increment:patch": "yarn version --patch",
     "lint:es": "eslint ./src --ext js,ts,tsx --cache --quiet",
     "lint:type": "tsc  --noEmit --project ./tsconfig.json --emitDeclarationOnly false",
     "lint:prettier": "pretty-quick --staged",
