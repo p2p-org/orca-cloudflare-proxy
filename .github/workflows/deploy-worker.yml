@@ -20,6 +20,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
           yarn increment:patch
+          git push
 
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0
