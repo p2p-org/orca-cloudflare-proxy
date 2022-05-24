@@ -1,8 +1,5 @@
 name: Deploy to Cloudflare Workers
-on:
-  push:
-    branches:
-      - master
+on: workflow_call
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,13 +11,6 @@ jobs:
 
       - name: Install dependecies
         run: yarn install
-
-      - name: Increment patch
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-          yarn increment:patch
-          git push
 
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0

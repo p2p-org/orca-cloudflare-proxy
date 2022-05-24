@@ -12,9 +12,10 @@ vars = { ENVIRONMENT = "development",  ORCA_ENDPOINT = "https://api.orca.so/conf
 kv_namespaces = [{ binding = "YOUR_DEV_BINDING_NAME", preview_id = "SAME_AS_ID", id = "YOUR_BINDING_ID" }]
 
 [env.production]
-account_id = "YOUR_PROD_ACCOUNT_ID"
+# @TODO move to env
+account_id = "e8861c88f3aeb07236ccc26b6c21c560"
 name = "orca-cloudflare"
 vars = { ENVIRONMENT = "production",  ORCA_ENDPOINT = "https://api.orca.so/configs" }
-kv_namespaces = [{ binding = "YOUR_PROD_BINDING_NAME", id = "PROD_ID" }]
+kv_namespaces = [{ binding = "KV_TOKEN_LIST_PROD", id = "3073bf66eac64652bfd2dbcb58b009ba" }]
 
 

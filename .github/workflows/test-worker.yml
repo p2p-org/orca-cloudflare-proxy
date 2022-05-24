@@ -1,15 +1,14 @@
 name: Test
 
 on:
+  push:
   pull_request:
     types:
       - opened
-      - edited
 
 jobs:
   lint_es:
     runs-on: ubuntu-latest
-    environment: production
     timeout-minutes: 10
     name: lint es
 
@@ -24,7 +23,6 @@ jobs:
 
   lint_type:
     runs-on: ubuntu-latest
-    environment: production
     timeout-minutes: 10
     name: lint type
     needs: lint_es
