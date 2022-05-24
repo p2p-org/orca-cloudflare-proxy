@@ -1,8 +1,6 @@
 import OrcaInfoCache from "./kv";
 import { router } from "./router";
 
-// @FIXME add mandatory linters checks
-// @TODO setup sttricter TS
 addEventListener("fetch", (event) =>
   event.respondWith(router.handle(event.request))
 );
