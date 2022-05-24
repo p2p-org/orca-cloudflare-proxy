@@ -2,8 +2,8 @@ name: Bump version
 
 on:
   push:
-#    branches:
-#      - master
+    branches:
+      - master
 
 jobs:
   version_bump:
