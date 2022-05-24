@@ -2,8 +2,6 @@ name: Bump version
 
 on:
   push:
-    branches:
-      - master
 
 jobs:
   version_bump:
@@ -18,3 +16,6 @@ jobs:
           skip-tag: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  call-deploy:
+    uses: ./.github/workflows/deploy-worker.yml
