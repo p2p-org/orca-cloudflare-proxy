@@ -2,8 +2,8 @@ name: Bump version
 
 on:
   push:
-    branches:
-      - master
+#    branches:
+#      - master
 
 jobs:
   version_bump:
@@ -21,3 +21,4 @@ jobs:
 
   call-deploy:
     uses: ./.github/workflows/deploy-worker.yml
+    secrets: inherit
