@@ -15,12 +15,12 @@ jobs:
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN_KEY_APP }}
           command: publish --env $ENVIRONMENT
           secrets: |
             ENVIRONMENT
             ORCA_ENDPOINT
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID_KEY_APP }}
           ENVIRONMENT: "production"
           ORCA_ENDPOINT: "https://api.orca.so/configs"

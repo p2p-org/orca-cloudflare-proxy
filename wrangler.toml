@@ -15,6 +15,6 @@ kv_namespaces = [{ binding = "YOUR_DEV_BINDING_NAME", preview_id = "SAME_AS_ID",
 # account_id = "PROD_ACCOUNT_ID || CLOUDFLARE_ACCOUNT_ID on CI"
 name = "orca-cloudflare"
 vars = { ENVIRONMENT = "production",  ORCA_ENDPOINT = "https://api.orca.so/configs" }
-kv_namespaces = [{ binding = "KV_TOKEN_LIST_PROD", id = "3073bf66eac64652bfd2dbcb58b009ba" }]
+kv_namespaces = [{ binding = "KV_TOKEN_LIST_PROD", id = "c07b6685d01a444a99d2a8dba00a5911" }]
 
 
