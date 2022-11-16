@@ -10,9 +10,7 @@ crons = ["*/1 * * * *"]
 port = 8080
 
 [env.development]
-kv_namespaces = [
-    { binding = "KV_TOKEN_LIST_DEV", preview_id = "db0634b590964ba29ad7b149e2245538", id = "db0634b590964ba29ad7b149e2245538" }
-]
+kv_namespaces = [{ binding = "KV_TOKEN_LIST_DEV", preview_id = "db0634b590964ba29ad7b149e2245538", id = "db0634b590964ba29ad7b149e2245538" }]
 
 [env.production]
 # account_id = "PROD_ACCOUNT_ID || CLOUDFLARE_ACCOUNT_ID on CI"

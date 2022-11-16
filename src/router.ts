@@ -1,11 +1,14 @@
 import { Router } from "itty-router";
 
 import OrcaInfoCache from "./kv";
+import { getOrcaInfo } from "./api";
 
 const router = Router();
 
 const getCorsHeaders = (request: Request) => {
   const headers = new Headers();
+
+  headers.set("Content-Type", "application/json");
 
   try {
     const url = new URL(request.headers.get("Origin") as string);
@@ -37,6 +40,18 @@ router.get("/meta", async (request: Request) => {
   const cacheMeta = await OrcaInfoCache.getCacheMeta();
 
   return new Response(JSON.stringify(cacheMeta), {
+    headers: getCorsHeaders(request),
+  });
+});
+
+router.get("/bypass-cache", async (request: Request) => {
+  if (ENVIRONMENT !== "development") {
+    return null;
+  }
+
+  const orcaInfo = await getOrcaInfo();
+
+  return new Response(JSON.stringify(orcaInfo), {
     headers: getCorsHeaders(request),
   });
 });

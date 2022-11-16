@@ -1,4 +1,4 @@
-import { IGNORED_POOLS_REGEX } from "./constants";
+import { IGNORED_POOLS_REGEX, IGNORED_TOKENS_REGEX } from "./constants";
 
 export const getOrcaInfo = async (): Promise<OrcaApiResponse | null> => {
   try {
@@ -6,19 +6,34 @@ export const getOrcaInfo = async (): Promise<OrcaApiResponse | null> => {
     const info = await response.json<OrcaApiResponse>();
 
     return {
-      pools: filterOutIgnoredPools(info.pools),
+      pools: filteredIgnoredValues<Pool>({
+        dataset: info.pools,
+        condition: IGNORED_POOLS_REGEX,
+      }),
+      tokens: filteredIgnoredValues<Token>({
+        dataset: info.tokens,
+        condition: IGNORED_TOKENS_REGEX,
+      }),
       programIds: info.programIds,
-      tokens: info.tokens,
     };
   } catch (err) {
     return null;
   }
 };
 
-export const filterOutIgnoredPools = (set: PoolList): PoolList => {
-  const filteredEntries = Object.entries<Pool>(set).filter(([name]) => {
-    return !IGNORED_POOLS_REGEX.test(name);
+type FilterConfig<T> = {
+  dataset: KeyValuePairs<T>;
+  condition: RegExp;
+};
+
+export function filteredIgnoredValues<T>(
+  config: FilterConfig<T>
+): KeyValuePairs<T> {
+  // const sets = Object.values(config.dataset) || {};
+
+  const filteredEntries = Object.entries<T>(config.dataset).filter(([name]) => {
+    return !config.condition.test(name);
   });
 
-  return Object.fromEntries<Pool>(filteredEntries);
-};
+  return Object.fromEntries<T>(filteredEntries);
+}
