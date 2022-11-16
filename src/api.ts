@@ -29,8 +29,6 @@ type FilterConfig<T> = {
 export function filteredIgnoredValues<T>(
   config: FilterConfig<T>
 ): KeyValuePairs<T> {
-  // const sets = Object.values(config.dataset) || {};
-
   const filteredEntries = Object.entries<T>(config.dataset).filter(([name]) => {
     return !config.condition.test(name);
   });
