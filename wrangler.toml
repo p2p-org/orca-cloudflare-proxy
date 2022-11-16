@@ -3,14 +3,15 @@ main = "src/index.ts"
 compatibility_date = "2022-05-11"
 
 [triggers]
-# crons = ["0 13 * * *"]
+# crons = ["0 14 * * *"]
 crons = ["*/1 * * * *"]
 
 [dev]
 port = 8080
 
 [env.development]
-kv_namespaces = [{ binding = "KV_TOKEN_LIST_DEV", preview_id = "db0634b590964ba29ad7b149e2245538", id = "db0634b590964ba29ad7b149e2245538" }]
+kv_namespaces = [{ binding = "KV_TOKEN_LIST_DEV", preview_id = "19d462b8a3df460bae9ce1f656c47588", id = "19d462b8a3df460bae9ce1f656c47588" }]
+vars = { ENVIRONMENT = "development",  ORCA_ENDPOINT = "https://api.orca.so/configs" }
 
 [env.production]
 # account_id = "PROD_ACCOUNT_ID || CLOUDFLARE_ACCOUNT_ID on CI"

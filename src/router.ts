@@ -46,7 +46,7 @@ router.get("/meta", async (request: Request) => {
 
 router.get("/bypass-cache", async (request: Request) => {
   if (ENVIRONMENT !== "development") {
-    return null;
+    return new Response("Only available in dev mode");
   }
 
   const orcaInfo = await getOrcaInfo();
