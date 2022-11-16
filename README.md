@@ -48,6 +48,8 @@ project as follows:
   credentials are managed through the GitHub environments here.
 - `kv_namespaces` See [KV stores](#kv-stores)
 
+Keep in mind that development variables are kept in `.dev.vars`. You can create one from `.dev.vars.example`.
+
 You also might want to update the `[triggers]` field. This field is used to set the schedule for API calls via the
 `crons` var. Its value is `["0 13 * * *"]` which means running the script at 1p.m. every day. To see actions faster while
 developing locally or to debug use value of `["*/1 * * * *"]` which would run it every minute.

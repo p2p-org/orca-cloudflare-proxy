@@ -36,6 +36,7 @@ yarn-error.log*
 
 # wragglet
 workers-site
+.dev.vars
 
 # dashed files and folders
 __*/
