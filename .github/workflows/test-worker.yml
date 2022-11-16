@@ -10,7 +10,7 @@ jobs:
   lint_es:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    name: Run ESLint
+    name: lint es
 
     steps:
       - uses: actions/checkout@v3
@@ -24,7 +24,7 @@ jobs:
   lint_type:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    name: Run TS Typecheck
+    name: lint type
     needs: lint_es
 
     steps:
@@ -35,18 +35,3 @@ jobs:
 
       - name: type-checking TS
         run: yarn lint:type
-
-  test_unit:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    name: Run Jest
-    needs: lint_type
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: install dependecies
-        run: yarn install
-
-      - name: run unit tests
-        run: yarn jest
