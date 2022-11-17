@@ -3,7 +3,7 @@ name: Bump version
 on:
   push:
     branches:
-      - none
+      - test
 
 jobs:
   version_bump:
@@ -34,8 +34,3 @@ jobs:
           yarn version --patch
           git push origin master
           git push origin --tags
-
-  call-deploy:
-    needs: version_bump
-    uses: ./.github/workflows/deploy-worker.yml
-    secrets: inherit
