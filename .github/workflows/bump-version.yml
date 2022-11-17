@@ -24,8 +24,9 @@ jobs:
 
       - name: Automated Version Bump
         #        uses: phips28/gh-action-bump-version@master
-        with:
-          skip-tag: true
+        #        with:
+        #          skip-tag: true
+        #          commit-message: "CI: bumps version to {{version}}"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_ORCA_PROXY_BOT }}
           GIT_AUTHOR_NAME: ${{ steps.import-gpg.outputs.name }}
@@ -33,7 +34,7 @@ jobs:
           GIT_COMMITTER_NAME: ${{ steps.import-gpg.outputs.name }}
           GIT_COMMITTER_EMAIL: ${{ steps.import-gpg.outputs.email }}
         run: |
-          yarn bump:patch
+          yarn version --patch
           git push origin main
           git push origin --tags
 
