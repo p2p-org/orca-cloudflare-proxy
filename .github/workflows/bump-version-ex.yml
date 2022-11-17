@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          persist-credentials: false
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
 
       - name: Automated Version Bump
@@ -29,4 +29,4 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          force: true
+          branch: ${{ github.head_ref }}
