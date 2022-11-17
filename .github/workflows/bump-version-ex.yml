@@ -35,42 +35,17 @@ jobs:
           echo ${{ steps.import-gpg.outputs.name }} ${{ steps.import-gpg.outputs.email }}
           yarn version --patch
           git push origin version-bump-branch
-          git push origin --tags
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+      - name: Create pull request
+        uses: devops-infra/action-pull-request@v0.5.3
         with:
-          token: ${{ secrets.PAT_ORCA_PROXY_BOT }}
-          title: Bump Version PR
-          commit-message: Bump Version
-          base: master
-          branch: version-bump-branch
-#  version_bump:
-#    needs: create_pr
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#
-#      - name: Import bot's GPG key for signing commits
-#        id: import-gpg
-#        uses: crazy-max/ghaction-import-gpg@v5
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          title: Automatic pull request
+#      - name: Create Pull Request
+#        uses: peter-evans/create-pull-request@v4
 #        with:
-#          gpg_private_key: ${{ secrets.BOT_GPG_PRIVATE_KEY }}
-#          passphrase: ${{ secrets.BOT_GPG_PASSPHRASE }}
-#          git_config_global: true
-#          git_user_signingkey: true
-#          git_commit_gpgsign: true
-#
-#      - name: Automated Version Bump
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.PAT_ORCA_PROXY_BOT }}
-#          GIT_AUTHOR_NAME: ${{ steps.import-gpg.outputs.name }}
-#          GIT_AUTHOR_EMAIL: ${{ steps.import-gpg.outputs.email }}
-#          GIT_COMMITTER_NAME: ${{ steps.import-gpg.outputs.name }}
-#          GIT_COMMITTER_EMAIL: ${{ steps.import-gpg.outputs.email }}
-#        run: |
-#          echo ${{ steps.import-gpg.outputs.name }} ${{ steps.import-gpg.outputs.email }}
-#          yarn version --patch
-#          git push origin master
-#          git push origin --tags
+#          token: ${{ secrets.PAT_ORCA_PROXY_BOT }}
+#          title: Bump Version PR
+#          commit-message: Bump Version
+#          base: master
+#          branch: version-bump-branch
