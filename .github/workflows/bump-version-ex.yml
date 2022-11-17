@@ -22,4 +22,9 @@ jobs:
           GIT_COMMITTER_EMAIL: ${{ steps.import-gpg.outputs.email }}
         run: |
           yarn version --patch --no-commit-hooks --no-git-tag-version
-          git push origin HEAD:${GITHUB_REF##*/}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PAT_ORCA_PROXY_BOT }}
+          branch: ${{ github.ref }}
