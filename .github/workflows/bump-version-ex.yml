@@ -40,9 +40,11 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: "Bump Version PR"
+          token: ${{ secrets.PAT_ORCA_PROXY_BOT }}
+          title: Bump Version PR
+          commit-message: Bump Version
           base: master
+          branch: version-bump-branch
 #  version_bump:
 #    needs: create_pr
 #    runs-on: ubuntu-latest
