@@ -33,6 +33,9 @@ jobs:
           GIT_COMMITTER_EMAIL: ${{ steps.import-gpg.outputs.email }}
         run: |
           echo ${{ steps.import-gpg.outputs.name }} ${{ steps.import-gpg.outputs.email }}
+          touch test.txt
+          git add .
+          git commit -m 'add test file'
           yarn version --patch
           git push origin version-bump-branch
 
