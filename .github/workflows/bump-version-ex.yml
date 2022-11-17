@@ -5,13 +5,16 @@ on:
     types:
       - opened
       - synchronize
-      -
+
 jobs:
   version_bump:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Automated Version Bump
         env:
@@ -26,5 +29,5 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.PAT_ORCA_PROXY_BOT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
