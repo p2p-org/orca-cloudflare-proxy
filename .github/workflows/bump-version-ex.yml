@@ -11,14 +11,38 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: version-bump-branch
+
+      - uses: crazy-max/ghaction-import-gpg@v5
+        name: Import bot's GPG key for signing commits
+        id: import-gpg
+        with:
+          gpg_private_key: ${{ secrets.BOT_GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.BOT_GPG_PASSPHRASE }}
+          git_config_global: true
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Automated Version Bump
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_ORCA_PROXY_BOT }}
+          GIT_AUTHOR_NAME: ${{ steps.import-gpg.outputs.name }}
+          GIT_AUTHOR_EMAIL: ${{ steps.import-gpg.outputs.email }}
+          GIT_COMMITTER_NAME: ${{ steps.import-gpg.outputs.name }}
+          GIT_COMMITTER_EMAIL: ${{ steps.import-gpg.outputs.email }}
+        run: |
+          echo ${{ steps.import-gpg.outputs.name }} ${{ steps.import-gpg.outputs.email }}
+          yarn version --patch
+          git push origin version-bump-branch
+          git push origin --tags
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: "bump-version-pr"
           title: "Bump Version PR"
-          base: "master"
+          base: master
 #  version_bump:
 #    needs: create_pr
 #    runs-on: ubuntu-latest
