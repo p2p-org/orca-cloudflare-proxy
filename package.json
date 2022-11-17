@@ -1,6 +1,6 @@
 {
   "name": "orca-cloudflare-proxy",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "A cloudflare worker for caching data from orca",
   "main": "src/index.ts",
   "repository": "https://github.com/p2p-org/orca-cloudflare-proxy",
