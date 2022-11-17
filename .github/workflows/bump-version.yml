@@ -30,6 +30,7 @@ jobs:
           GIT_COMMITTER_NAME: ${{ steps.import-gpg.outputs.name }}
           GIT_COMMITTER_EMAIL: ${{ steps.import-gpg.outputs.email }}
         run: |
+          echo ${{ steps.import-gpg.outputs.name }} ${{ steps.import-gpg.outputs.email }}
           yarn version --patch
           git push origin master
           git push origin --tags
