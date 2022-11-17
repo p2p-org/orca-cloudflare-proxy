@@ -23,7 +23,7 @@ jobs:
           git_commit_gpgsign: true
 
       - name: Automated Version Bump
-        uses: phips28/gh-action-bump-version@master
+        #        uses: phips28/gh-action-bump-version@master
         with:
           skip-tag: true
         env:
@@ -32,6 +32,10 @@ jobs:
           GIT_AUTHOR_EMAIL: ${{ steps.import-gpg.outputs.email }}
           GIT_COMMITTER_NAME: ${{ steps.import-gpg.outputs.name }}
           GIT_COMMITTER_EMAIL: ${{ steps.import-gpg.outputs.email }}
+        run: |
+          yarn bump:patch
+          git push origin main
+          git push origin --tags
 
   call-deploy:
     needs: version_bump
