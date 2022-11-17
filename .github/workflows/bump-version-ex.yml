@@ -36,16 +36,10 @@ jobs:
           yarn version --patch
           git push origin version-bump-branch
 
-      - name: Create pull request
-        uses: devops-infra/action-pull-request@v0.5.3
+      - uses: peter-evans/create-pull-request@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          title: Automatic pull request
-#      - name: Create Pull Request
-#        uses: peter-evans/create-pull-request@v4
-#        with:
-#          token: ${{ secrets.PAT_ORCA_PROXY_BOT }}
-#          title: Bump Version PR
-#          commit-message: Bump Version
-#          base: master
-#          branch: version-bump-branch
+          commit-message: Bump version
+          title: Version Bumper
+          base: master
+          labels: automated-pr
+          branch: version-bump-branch
