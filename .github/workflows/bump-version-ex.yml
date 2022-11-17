@@ -12,9 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
 
       - name: Automated Version Bump
         env:
@@ -24,9 +21,12 @@ jobs:
           GIT_COMMITTER_NAME: ${{ steps.import-gpg.outputs.name }}
           GIT_COMMITTER_EMAIL: ${{ steps.import-gpg.outputs.email }}
         run: |
+          echo ${{ github.ref_name }}
+          echo ${{ github.ref }}
+          echo origin/${{ github.event.pull_request.head.ref }}
           yarn version --patch --no-commit-hooks --no-git-tag-version
-
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          branch: ${{ github.head_ref }}
+          branch: ${{ github.event.pull_request.head.ref }}
+          force: true
