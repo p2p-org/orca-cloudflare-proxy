@@ -18,7 +18,7 @@ jobs:
         uses: thebongy/version-check@v1
         with:
           file: package.json
-          tagFormat: v${version}-beta
+          tagFormat: v${version}
         id: version_check_staging
 #name: Bump version
 #
